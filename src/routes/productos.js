@@ -1,7 +1,9 @@
 import express from 'express';
-
-
+import { sendProduct } from '../../public/main';
 import Product from '../Productos'
+
+
+
 
 const products = new Product()
 const router = express.Router();
@@ -46,18 +48,11 @@ router.delete('/productos/borrar/:id', (req, res) => {
      });
 });
 
-router.post('/productos/guardar', (req, res) => {
-  console.log(req.body)
-	const {title,price,thumbnail} = req.body;
-
-  products.guardarProducto(title,price,thumbnail)
-	
-	res.redirect('/api/productos/vista');
-});
 
 
 router.get('/productos/vista', (req, res) => {
   let productos =  products.leerProductos()
+  
    if(productos ===[] ) res.render("index",{mensaje:'No hay productos'})
    
         res.render("index", {productos} );
