@@ -9,9 +9,11 @@ import prod from './routes/productos';
 
 /** INICIALIZACION API con EXPRESS */
 const app = express();
-const puerto = 8080;
+const puerto = 8000;
 
-
+app.on('error', (err) => {
+  console.log('ERROR ATAJADO', err);
+});
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
 
@@ -23,12 +25,10 @@ app.set('views', viewsPath);
 
 const myServer = http.Server(app);
 
-
-myServer.listen(puerto, () => console.log('Server up en puerto', puerto));
-
-
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+
+myServer.listen(puerto, () => console.log('Server up en puerto', puerto));
 
 
 app.use('/api', prod)

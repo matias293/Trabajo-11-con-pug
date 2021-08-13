@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendProduct } from '../../public/main';
+
 import Product from '../Productos'
 
 
@@ -7,6 +7,15 @@ import Product from '../Productos'
 
 const products = new Product()
 const router = express.Router();
+
+router.post('/productos/guardar', (req, res) => {
+  
+	const {title,price,thumbnail} = req.body;
+
+  products.guardarProducto(title,price,thumbnail)
+	
+	
+});
 
 
 
