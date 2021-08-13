@@ -3,20 +3,15 @@ import express from 'express';
 import Product from '../Productos'
 
 
-
-
 const products = new Product()
 const router = express.Router();
 
-router.post('/productos/guardar', (req, res) => {
+// router.post('/productos/guardar', (req, res) => {
   
-	const {title,price,thumbnail} = req.body;
+// 	const {title,price,thumbnail} = req.body;
 
-  products.guardarProducto(title,price,thumbnail)
-	
-	
-});
-
+//   products.guardarProducto(title,price,thumbnail)
+// });
 
 
   router.get('/productos/listar', (req, res) => {
@@ -62,7 +57,7 @@ router.delete('/productos/borrar/:id', (req, res) => {
 router.get('/productos/vista', (req, res) => {
   let productos =  products.leerProductos()
   
-   if(productos ===[] ) res.render("index",{mensaje:'No hay productos'})
+   if(productos !== [] ) res.render("index", { mensaje: 'No hay productos disponibles' })
    
         res.render("index", {productos} );
 })

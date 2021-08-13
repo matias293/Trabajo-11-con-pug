@@ -6,12 +6,13 @@ html(lang='en')
         meta(name='viewport', content='width=device-width, initial-scale=1.0')
         link(href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css', rel='stylesheet', integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC', crossorigin='anonymous')
         script(src="/socket.io/socket.io.js")
-        script(src="main.js")
+        script(src="/main.js")
+        
         title Producto con socket y pug
         
     body
 
-    form(action="/api/productos/guardar" method="POST" class="mt-7")
+    form
         div(class="mb-3 mt-3")
           label(for="title" class="form-label")='Title'
           input(type="text" id="title" name="title" class="form-control")
@@ -27,16 +28,19 @@ html(lang='en')
             input(type="text" name="thumbnail" id="thumbnail" class="form-control")
           
         
-        button(type="submit" class="btn btn-primary mt-5"  )='Submit'
+        button(onclick="sendProduct(this)" type="submit" class="btn btn-primary mt-3" )='Submit'
     
-    
-    table(class="table")
-      thead 
-        tr 
-          th(scope="col")= 'Title'
-          th(scope="col")= 'Price'
-          th(scope="col")= 'Thumbnail'
-      tbody(id="table_body") 
+    if mensaje 
+      h1(class="mt-5")= mensaje
+      
+    else   
+      table(class="table")
+        thead 
+          tr 
+            th(scope="col")= 'Title'
+            th(scope="col")= 'Price'
+            th(scope="col")= 'Thumbnail'
+        tbody(id="table_body") 
   
       
    

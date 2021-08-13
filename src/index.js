@@ -11,47 +11,55 @@ import prod from './routes/productos';
 const app = express();
 const puerto = 8000;
 
-app.on('error', (err) => {
-  console.log('ERROR ATAJADO', err);
-});
 const publicPath = path.resolve(__dirname, '../public');
 app.use(express.static(publicPath));
-
 
 app.set('view engine', 'pug');
 const viewsPath = path.resolve(__dirname, '../views');
 app.set('views', viewsPath);
 
 
-const myServer = http.Server(app);
-
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
 
+const myServer = http.Server(app);
+
+
+myServer.on('error', (err) => {
+  console.log('ERROR ATAJADO', err);
+});
+
+
 myServer.listen(puerto, () => console.log('Server up en puerto', puerto));
 
-
 app.use('/api', prod)
-
 
 const myWSServer = io(myServer);
 
 
 const products = new Product()
-let listaProductos = products.leerProductos()
 
-myWSServer.on('connect', socket => {
 
-   socket.on('new-product',product => {
-     const {title,price,thumbnail} = product
+
+
+myWSServer.on('connect', (socket) => {
+
+   socket.on('new-product', (product) => {
+     
+     let {title,price,thumbnail} = product
+
      products.guardarProducto(title,price,thumbnail)
+     let listaProductos = products.leerProductos()
 
      myWSServer.emit('products', listaProductos);
    })
 
    socket.on('askProduct', (productos) => {
+    let listaProductos = products.leerProductos()
     
     socket.emit('products', listaProductos);
   });
 })
+
+
 
