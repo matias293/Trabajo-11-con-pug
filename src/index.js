@@ -43,20 +43,27 @@ const products = new Product()
 
 
 myWSServer.on('connect', (socket) => {
+   console.log('usuario conectado')
 
    socket.on('new-product', (product) => {
-     
+    
      let {title,price,thumbnail} = product
-
+     
      products.guardarProducto(title,price,thumbnail)
+
      let listaProductos = products.leerProductos()
 
-     myWSServer.emit('products', listaProductos);
-   })
+   
+
+     
+    })
+    
+    let listaProductos = products.leerProductos()
+    myWSServer.emit('products', listaProductos);
 
    socket.on('askProduct', (productos) => {
     let listaProductos = products.leerProductos()
-    
+    console.log('recien entro')
     socket.emit('products', listaProductos);
   });
 })

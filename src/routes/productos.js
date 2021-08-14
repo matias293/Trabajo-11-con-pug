@@ -56,9 +56,20 @@ router.delete('/productos/borrar/:id', (req, res) => {
 
 router.get('/productos/vista', (req, res) => {
   let productos =  products.leerProductos()
+  let dato = {
+    mensaje:'No hay productos disponibles',
+    productos,
+    estado:true
+  }
+ 
+  if (productos.length > 0) dato.estado = false
+
+  res.render("index", {dato} )
+    
+    
+
   
-   if(productos !== [] ) res.render("index", { mensaje: 'No hay productos disponibles' })
-   
-        res.render("index", {productos} );
+  
+
 })
 export default router;
