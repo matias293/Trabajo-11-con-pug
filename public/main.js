@@ -20,7 +20,7 @@ socket.on('askProduct')
 }
 const render = (productos) => {
     
-  if (productos.length >= 1) {
+ 
     let productsHtml = ''
     productos.forEach((producto )=> {
         productsHtml +=`
@@ -35,9 +35,7 @@ const render = (productos) => {
     document.getElementById('table_body').innerHTML = productsHtml
   }
 
-  else return
-
-}
+  
 
  
 
